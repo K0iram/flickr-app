@@ -29,7 +29,7 @@ const Gallery = ({ images }: GalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<FlickrPhoto | null>(null)
 
   const handleImageClick = ({ index }: { index: number }) => {
-    if (index) {
+    if (index >= 0 && index < images.length) {
       const photo: FlickrPhoto = images[index] as unknown as FlickrPhoto
       setOpen(true)
       setSelectedImage(photo)

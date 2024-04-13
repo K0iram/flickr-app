@@ -2,6 +2,21 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid"
 
 import flickrLogo from "../images/flickrLogo.png"
 
+/**
+ * Navbar Component
+ *
+ * This component is responsible for rendering the navigation bar of the application.
+ * It includes the application logo, a search input field, and handles user interactions for searching.
+ *
+ * Props:
+ * - handleClear: A function that is called when the input field is cleared.
+ * - handleKeyPress: A function that is called when a key is pressed in the input field.
+ *
+ * The search input field allows users to type in their search queries.
+ *
+ * The `handleKeyPress` function is used to detect when the user presses the "Enter" key to initiate a search.
+ * The `handleClear` function is used to clear the search input when necessary.
+ */
 const Navbar = ({
   handleClear,
   handleKeyPress

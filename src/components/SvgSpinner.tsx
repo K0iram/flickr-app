@@ -1,3 +1,9 @@
+/**
+ * SvgSpinner Component
+ *
+ * This component renders an SVG spinner animation that can be used to indicate loading or processing state in the application.
+ * The spinner uses the `animate-spin` class from Tailwind CSS to rotate around its center, creating a spinning effect.
+ */
 const SvgSpinner: React.FC = () => {
   return (
     <svg

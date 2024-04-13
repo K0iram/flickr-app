@@ -8,7 +8,31 @@ import Navbar from "./components/Navbar"
 import SvgSpinner from "./components/SvgSpinner"
 import { FetchPicturesResponse } from "./types/images"
 
-function App(): JSX.Element {
+/**
+ * This component is the main entry point of the application. It handles the search functionality,
+ * fetching of pictures using an infinite query, and rendering the main UI components such as the Navbar,
+ * Gallery, and a loading spinner.
+ *
+ * State:
+ * - loadMoreRef: A reference to the div element used for triggering the fetch of the next page of pictures.
+ * - searchParams, setSearchParams: State for managing URL search parameters.
+ * - searchQuery: The current search query derived from the URL search parameters.
+ *
+ * Functions:
+ * - handleKeyPress: Handles the 'Enter' key press in the search input to initiate a search.
+ * - handleClear: Clears the search input and search parameters when the input is cleared.
+ *
+ * Hooks:
+ * - useInfiniteQuery: Fetches pictures in an infinite scrolling manner based on the search query.
+ * - useEffect: Sets up an IntersectionObserver to trigger the fetch of the next page when the user scrolls to the bottom.
+ *
+ * The component renders:
+ * - Navbar: The top navigation bar with a search input.
+ * - Gallery: A grid of images fetched based on the search query.
+ * - SvgSpinner: A loading spinner shown while fetching the next page of images.
+ */
+
+const App = (): JSX.Element => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
   const searchQuery = searchParams.get("search")
@@ -55,6 +79,7 @@ function App(): JSX.Element {
       lastPage.nextPage && lastPage.nextPage <= lastPage.totalPages ? lastPage.nextPage : undefined,
     initialPageParam: 1
   })
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {

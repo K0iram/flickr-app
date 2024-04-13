@@ -10,6 +10,20 @@ interface ImageModalProps {
   onClose: () => void
 }
 
+/**
+ * ImageModal Component
+ *
+ * This component is responsible for displaying the modal that shows the selected image's details.
+ * It uses the Headless UI Dialog component to create an accessible modal dialog.
+ *
+ * Props:
+ * - selectedImage: The FlickrPhoto object containing details of the selected image.
+ * - open: A boolean indicating if the modal is open or not.
+ * - onClose: A function to be called when the modal needs to be closed.
+ *
+ * The modal displays the image, its title, and provides a close button to dismiss the modal.
+ * It only renders if a selectedImage is provided.
+ */
 const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
   if (!selectedImage) {
     return null

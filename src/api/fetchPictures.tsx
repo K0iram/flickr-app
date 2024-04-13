@@ -1,32 +1,16 @@
-import { FetchPicturesResponse, FlickrPhotoDescription } from "@/types/images"
+import { FetchPicturesParams, FetchPicturesResponse, PageData, PhotoData } from "@/types/images"
 
-interface PhotoData {
-  src: string
-  width: number
-  height: number
-  alt: string
-  url_s: string
-  width_s: string
-  height_s: string
-  title: string
-  count_comments: string
-  count_faves: string
-  ownername: string
-  realname: string
-  description: FlickrPhotoDescription
-}
-
-interface PageData {
-  result: PhotoData[]
-  nextPage: number
-  totalPages: number
-  lastPage: number
-}
-
-interface FetchPicturesParams {
-  pageParam: number
-  query: string
-}
+/**
+ * fetchPictures is an asynchronous function that fetches pictures from the Flickr API based on the provided search query and pagination parameters.
+ *
+ * @param {FetchPicturesParams} params - The parameters for fetching pictures, including the page number and search query.
+ * @returns {Promise<FetchPicturesResponse>} A promise that resolves to the fetched pictures' data, including an array of photo data, next page number, total pages, and last page number.
+ *
+ * The function constructs a URL with the necessary query parameters for the Flickr API request, including the API key, search text, extras for additional photo information, and pagination details.
+ * If the search term is not provided, it returns a default response with empty results.
+ * On a successful API call, it processes the response to extract and format the necessary photo data for the application.
+ * If the API call fails, it throws an error indicating a network issue.
+ */
 
 const fetchPictures = async ({
   pageParam,

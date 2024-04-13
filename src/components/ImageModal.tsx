@@ -97,7 +97,6 @@ const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
                       {selectedImage.faves_count}
                     </span>
                   </div>
-                  {/* Additional content can go here */}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

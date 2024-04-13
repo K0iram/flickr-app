@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# Flickr App - Seesaw Assessment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+The Flickr App is a React-based application that allows users to search for images using the Flickr API. It features an infinite scroll gallery, where more images are loaded as the user scrolls down. The app is built with React 18 and utilizes TailwindCSS for styling.
 
-## Available Scripts
+## How to Run the App
 
-In the project directory, you can run:
+### Prerequisites
+- Node.js installed on your machine.
+- An API key from Flickr.
 
-### `npm start`
+### Steps
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Install dependencies by running:
+   ```bash
+   npm install
+   ```
+4. Create a `.env` file in the root directory and add your Flickr API key as follows:
+   ```env
+   REACT_APP_FLICKR_API_KEY=your_api_key_here
+   ```
+5. Start the development server:
+   ```bash
+   npm start
+   ```
+6. Open `http://localhost:3000` in your browser to view the app.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## API Endpoints Used
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The app uses the Flickr API to fetch images based on the user's search query. The specific endpoint used is:
 
-### `npm test`
+- **Flickr Photos Search API**: `https://api.flickr.com/services/rest?method=flickr.photos.search`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The request to this endpoint includes parameters such as the API key, search text, response format, and additional parameters to fetch specific photo details. The response is then processed and displayed in the app's gallery.
 
-### `npm run build`
+For more details on the Flickr API, refer to the [Flickr API documentation](https://www.flickr.com/services/api/).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Key Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Search**: Users can search for images using keywords.
+- **Infinite Scrolling**: More images are loaded as the user scrolls down.
+- **Image Details**: Clicking on an image opens a modal with more details about the image.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Development
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is set up with ESLint and Prettier for code linting and formatting. TailwindCSS is used for styling, and the project structure follows a modular approach for ease of development and maintenance.

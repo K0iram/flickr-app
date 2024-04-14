@@ -1,4 +1,4 @@
-import { FetchPicturesParams, FetchPicturesResponse, PageData, PhotoData } from "@/types/images"
+import { FetchPicturesParams, FetchPicturesResponse, PhotoData } from "@/types/images"
 
 /**
  * fetchPictures is an asynchronous function that fetches pictures from the Flickr API based on the provided search query and pagination parameters.
@@ -18,7 +18,8 @@ const fetchPictures = async ({
 }: FetchPicturesParams): Promise<FetchPicturesResponse> => {
   const { REACT_APP_FLICKR_API_KEY } = process.env
   const searchTerm = query
-  if (!searchTerm) return { result: [], nextPage: 1, totalPages: 1, lastPage: 1 } as PageData
+  if (!searchTerm)
+    return { result: [], nextPage: 1, totalPages: 1, lastPage: 1 } as FetchPicturesResponse
 
   const extras = `count_comments,count_faves,description,owner_name,path_alias,realname,url_s`
 
@@ -37,15 +38,15 @@ const fetchPictures = async ({
       height: parseInt(photo.height_s, 10) || 150,
       alt: photo.title,
       description: photo.description._content,
-      comments_count: photo.count_comments,
-      faves_count: photo.count_faves,
+      commentsCount: photo.count_comments,
+      favesCount: photo.count_faves,
       ownername: photo.ownername,
       realname: photo.realname,
       title: photo.title
     })),
     nextPage: (pageParam as number) + 1,
     totalPages: data.photos.pages
-  } as PageData
+  } as FetchPicturesResponse
 }
 
 export default fetchPictures

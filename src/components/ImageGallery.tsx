@@ -30,7 +30,7 @@ const Gallery = ({ images }: GalleryProps) => {
 
   const handleImageClick = ({ index }: { index: number }) => {
     if (index >= 0 && index < images.length) {
-      const photo: FlickrPhoto = images[index] as unknown as FlickrPhoto
+      const photo: FlickrPhoto = images[index]
       setOpen(true)
       setSelectedImage(photo)
     }
@@ -43,13 +43,7 @@ const Gallery = ({ images }: GalleryProps) => {
 
   return (
     <div className="p-6 mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-      <PhotoAlbum
-        layout="masonry"
-        photos={images}
-        spacing={8}
-        columns={4}
-        onClick={handleImageClick}
-      />
+      <PhotoAlbum layout="masonry" photos={images} spacing={8} onClick={handleImageClick} />
       <ImageModal open={open} onClose={handleClose} selectedImage={selectedImage} />
     </div>
   )

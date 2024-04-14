@@ -90,11 +90,11 @@ const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
                         className="h-4 w-4 mr-1 text-gray-500"
                         aria-hidden="true"
                       />
-                      {selectedImage.comments_count}
+                      {selectedImage.commentsCount}
                     </span>
                     <span className="flex items-center">
                       <HeartIcon className="h-4 w-4 mr-1 text-red-500" aria-hidden="true" />
-                      {selectedImage.faves_count}
+                      {selectedImage.favesCount}
                     </span>
                   </div>
                 </div>

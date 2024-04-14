@@ -21,7 +21,7 @@ const fetchPictures = async ({
   if (!searchTerm)
     return { result: [], nextPage: 1, totalPages: 1, lastPage: 1 } as FetchPicturesResponse
 
-  const extras = `count_comments,count_faves,description,owner_name,path_alias,realname,url_s`
+  const extras = `count_comments,count_faves,description,owner_name,path_alias,realname,url_w`
 
   const response = await fetch(
     `https://api.flickr.com/services/rest?method=flickr.photos.search&sort=relevance&api_key=${REACT_APP_FLICKR_API_KEY}&text=${searchTerm}&format=json&nojsoncallback=1&extras=${extras}&per_page=20&page=${pageParam}`
@@ -33,14 +33,16 @@ const fetchPictures = async ({
 
   return {
     result: data.photos.photo.map((photo: PhotoData) => ({
-      src: photo.url_s,
-      width: parseInt(photo.width_s, 10) || 150,
-      height: parseInt(photo.height_s, 10) || 150,
+      id: photo.id,
+      src: photo.url_w,
+      width: parseInt(photo.width_w, 10) || 150,
+      height: parseInt(photo.height_w, 10) || 150,
       alt: photo.title,
       description: photo.description._content,
       commentsCount: photo.count_comments,
       favesCount: photo.count_faves,
       ownername: photo.ownername,
+      userId: photo.owner,
       realname: photo.realname,
       title: photo.title
     })),

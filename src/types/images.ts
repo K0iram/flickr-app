@@ -1,13 +1,15 @@
 // Flickr API photo data
 export interface PhotoData {
+  id: string
   src: string
+  url_w: string
   alt: string
-  url_s: string
-  width_s: string
-  height_s: string
+  width_w: string
+  height_w: string
   title: string
   count_comments: string
   count_faves: string
+  owner: string
   ownername: string
   realname: string
   description: FlickrPhotoDescription
@@ -20,6 +22,8 @@ export type FlickrPhotoDescription = {
 
 // Adjusted Flickr API photo data
 export interface FlickrPhoto {
+  id: string
+  thumbSrc: string
   src: string
   width: number
   height: number
@@ -28,6 +32,7 @@ export interface FlickrPhoto {
   commentsCount: string
   favesCount: string
   ownername: string
+  userId: string
   realname: string
   description: FlickrPhotoDescription
 }

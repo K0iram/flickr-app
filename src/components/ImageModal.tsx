@@ -1,6 +1,11 @@
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { ChatBubbleLeftEllipsisIcon, HeartIcon, XMarkIcon } from "@heroicons/react/20/solid"
+import {
+  ChatBubbleLeftEllipsisIcon,
+  HeartIcon,
+  LinkIcon,
+  XMarkIcon
+} from "@heroicons/react/20/solid"
 
 import { FlickrPhoto } from "@/types/images"
 
@@ -55,7 +60,7 @@ const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative mx-auto my-8 w-[500px] h-[500px] overflow-hidden rounded-lg bg-white shadow-xl flex flex-col">
+              <Dialog.Panel className="relative mx-auto my-8 w-[500px] max-h-[700px] overflow-hidden rounded-lg bg-white shadow-xl flex flex-col">
                 {/* Close Button */}
                 <button
                   onClick={onClose}
@@ -96,6 +101,15 @@ const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
                       <HeartIcon className="h-4 w-4 mr-1 text-red-500" aria-hidden="true" />
                       {selectedImage.favesCount}
                     </span>
+                    <a
+                      href={`https://www.flickr.com/photos/${selectedImage.userId}/${selectedImage.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center"
+                    >
+                      <LinkIcon className="h-4 w-4 mr-1 text-gray-500" aria-hidden="true" />
+                      Link
+                    </a>
                   </div>
                 </div>
               </Dialog.Panel>

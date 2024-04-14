@@ -37,7 +37,7 @@ export interface GalleryProps {
   images: FlickrPhoto[]
 }
 
-// Returned from Flickr API
+// Flickr API response
 export interface FetchPicturesResponse {
   result: FlickrPhoto[]
   nextPage: number

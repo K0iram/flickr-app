@@ -1,9 +1,9 @@
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import {
+  ArrowDownIcon,
   ChatBubbleLeftEllipsisIcon,
   HeartIcon,
-  LinkIcon,
   XMarkIcon
 } from "@heroicons/react/20/solid"
 
@@ -30,8 +30,53 @@ interface ImageModalProps {
  * It only renders if a selectedImage is provided.
  */
 const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
+  const { REACT_APP_FLICKR_API_KEY } = process.env
+  const [imageUrl, setImageUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (open && selectedImage) {
+      const url = `https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${REACT_APP_FLICKR_API_KEY}&photo_id=${selectedImage.id}&format=json&nojsoncallback=1`
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.stat === "ok") {
+            const sizes = data.sizes.size
+            const original = sizes.find((size: { label: string }) => size.label === "Original")
+            if (original) {
+              setImageUrl(original.source)
+              console.log(original)
+            }
+          }
+        })
+        .catch(error => console.error("Failed to load image data", error))
+    }
+  }, [open, selectedImage])
+
   if (!selectedImage) {
     return null
+  }
+
+  function downloadImage(imageUrl: RequestInfo | URL, fileName: string) {
+    // Step 1: Fetch the image as a Blob
+    fetch(imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        // Step 2: Create an object URL for the Blob
+        const url = window.URL.createObjectURL(blob)
+
+        // Step 3: Create a temporary link and trigger the download
+        const a = document.createElement("a")
+        a.style.display = "none"
+        a.href = url
+        a.download = fileName || "download.jpg" // Default filename if none provided
+        document.body.appendChild(a)
+        a.click()
+
+        // Step 4: Clean up by revoking the object URL and removing the temporary link
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+      })
+      .catch(err => console.error("Could not download the image", err))
   }
 
   return (
@@ -101,15 +146,22 @@ const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
                       <HeartIcon className="h-4 w-4 mr-1 text-red-500" aria-hidden="true" />
                       {selectedImage.favesCount}
                     </span>
-                    <a
-                      href={`https://www.flickr.com/photos/${selectedImage.userId}/${selectedImage.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center"
-                    >
-                      <LinkIcon className="h-4 w-4 mr-1 text-gray-500" aria-hidden="true" />
-                      Link
-                    </a>
+                    {imageUrl && (
+                      <a
+                        className="flex items-center cursor-pointer"
+                        href="#"
+                        onClick={e => {
+                          e.preventDefault() // Prevent the default anchor action
+                          downloadImage(
+                            selectedImage.src,
+                            `${selectedImage.title.replace(/[^a-z0-9]/gi, "_").toLowerCase()}.jpg`
+                          )
+                        }}
+                      >
+                        <ArrowDownIcon className="h-4 w-4 mr-1 text-gray-500" aria-hidden="true" />
+                        Download
+                      </a>
+                    )}
                   </div>
                 </div>
               </Dialog.Panel>

@@ -56,27 +56,30 @@ const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
     return null
   }
 
-  function downloadImage(imageUrl: RequestInfo | URL, fileName: string) {
-    // Step 1: Fetch the image as a Blob
+  const downloadImage = (imageUrl: RequestInfo | URL, fileName: string) => {
     fetch(imageUrl)
       .then(response => response.blob())
       .then(blob => {
-        // Step 2: Create an object URL for the Blob
         const url = window.URL.createObjectURL(blob)
 
-        // Step 3: Create a temporary link and trigger the download
         const a = document.createElement("a")
         a.style.display = "none"
         a.href = url
-        a.download = fileName || "download.jpg" // Default filename if none provided
+        a.download = fileName || "download.jpg"
         document.body.appendChild(a)
         a.click()
 
-        // Step 4: Clean up by revoking the object URL and removing the temporary link
+        // Clean up by revoking the object URL and removing the temporary link
         window.URL.revokeObjectURL(url)
         document.body.removeChild(a)
       })
       .catch(err => console.error("Could not download the image", err))
+  }
+
+  const onDownloadClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    if (!imageUrl) return
+    downloadImage(imageUrl, `${selectedImage.title.replace(/[^a-z0-9]/gi, "_").toLowerCase()}.jpg`)
   }
 
   return (
@@ -150,13 +153,7 @@ const ImageModal = ({ selectedImage, open, onClose }: ImageModalProps) => {
                       <a
                         className="flex items-center cursor-pointer"
                         href="#"
-                        onClick={e => {
-                          e.preventDefault() // Prevent the default anchor action
-                          downloadImage(
-                            selectedImage.src,
-                            `${selectedImage.title.replace(/[^a-z0-9]/gi, "_").toLowerCase()}.jpg`
-                          )
-                        }}
+                        onClick={onDownloadClick}
                       >
                         <ArrowDownIcon className="h-4 w-4 mr-1 text-gray-500" aria-hidden="true" />
                         Download

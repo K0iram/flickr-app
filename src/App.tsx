@@ -66,6 +66,7 @@ const App = (): JSX.Element => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isFetching,
     refetch
   }: UseInfiniteQueryResult<PaginatedFetchPicturesResponse, unknown> = useInfiniteQuery({
     queryKey: ["fetchPictures", { searchQuery }],
@@ -103,14 +104,21 @@ const App = (): JSX.Element => {
   return (
     <>
       <Navbar handleClear={handleClear} handleKeyPress={handleKeyPress} />
-
+      {isFetching && !isFetchingNextPage && (
+        <div className="flex justify-center items-center space-x-4">
+          <SvgSpinner />
+          <p className="text-gray-900 mr-4 text-xl">Loading...</p>
+        </div>
+      )}
       {images.length > 0 ?
         <Gallery images={images} />
-      : <p className="text-center text-gray-900 text-xl font-bold">
-          Search for images using the search bar above
+      : !isFetching && searchQuery ?
+        <p className="text-center text-gray-500 text-xl">
+          No images found. Try a different search!
         </p>
-      }
-
+      : !isFetching && !searchQuery ?
+        <p className="text-center text-gray-500 text-xl">Enter a search term to find images.</p>
+      : null}
       <div ref={loadMoreRef} style={{ height: "20px", visibility: "hidden" }} />
       {isFetchingNextPage && (
         <div className="flex justify-center items-center space-x-4">
